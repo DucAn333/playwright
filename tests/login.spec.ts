@@ -34,7 +34,7 @@ const account = Data_account[0];
 
 
 await page.waitForTimeout(1000); 
-await loginUI.check.click();
+//await loginUI.check.click();
 //await page.close();
 
 
