@@ -17,7 +17,7 @@ test.beforeEach(async ({ page }) => {
     // await expect(loginUI.verify).toBeVisible();
     await expect(loginUI.check).toBeVisible();
     //await wait(1000);
-    await page.waitForTimeout(1000);
+    await page.waitForTimeout(3000);
 });
 
 
