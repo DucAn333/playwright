@@ -15,7 +15,12 @@ export const Data_account: form_data[] =  [
     {
       email: 'nguyenducan.tm@gmail.com',
       password: 'hy6NtJTSyWD@4f'
+    },
+    {
+      email: 'nguyenducan.tm@gmail.',
+      password: 'hy6NtJTSyWD@4f'
     }
+
   
   ];
 
