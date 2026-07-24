@@ -29,7 +29,7 @@ await page.goto('http://automationexercise.com');
 const loginUI = Login_page(page);
 const account = Data_account[0];
 
-
+await page.waitForTimeout(3000);
 
 
 
