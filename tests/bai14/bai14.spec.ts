@@ -1,6 +1,6 @@
 
 import { product_name , quanlity } from '../../type/bai14/bai14.data';
-import { indexFixture , test ,  expect } from '../../fixture/index.fixture';
+import { indexFixture , test ,  expect } from '../../fixture/bai15/index.fixture';
 
 
 const link = 'https://automationexercise.com';
