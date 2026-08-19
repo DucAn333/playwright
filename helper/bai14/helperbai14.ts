@@ -9,10 +9,10 @@ import { add_payment } from '../../page/bai14/add_card_payment';
 // de het vao 1 class cho tien :))
 
 export class aciton {
-    private cart_page : cart_page;
-    private productInfo : product_info;
-    private signUp : SignUp;
-    private addPayment : add_payment;
+    readonly cart_page : cart_page;
+    readonly productInfo : product_info;
+    readonly signUp : SignUp;
+    readonly addPayment : add_payment;
 
     constructor(page: Page) {
         this.cart_page = new cart_page(page);
@@ -52,8 +52,8 @@ export class aciton {
         await this.cart_page.view_cart_pop_up.click();
     }
     async go_to_login_affter_cart():Promise<void>{
+        await this.cart_page.page.waitForTimeout(1000)
         await this.cart_page.check_out_btn.click();
-        
         await this.cart_page.go_to_login.click();
     }
     async sign_up_new_account():Promise<void>{

@@ -1,4 +1,5 @@
 import { Locator , Page } from '@playwright/test';
+import { product_name , quanlity } from '../../type/bai14/bai14.data';
 //const quantily = 1;
 export class cart_page{
     page : Page;
@@ -30,18 +31,19 @@ export class cart_page{
             return this.page.getByRole('button', { name: 'Continue Shopping' })
     }
     get verify_product_01(): Locator{
-            return this.page.locator('#product-1')
+            return this.page.locator('#product-1').getByRole('link', { name: `${product_name.product01}` })
     }
     get verify_product_02(): Locator{
-            return this.page.locator('#product-2')
+            return this.page.locator('#product-2').getByRole('link', { name: `${product_name.product02}` })
     }
 
     // co the de so luong thanh 1 bien de verify, nhung em lay locator nhu nay luon cho nhanh
     get verify_quanlity_01(): Locator{
-            return this.page.locator('#product-1').getByRole('button', { name: '1' })
+            return this.page.getByRole('row').filter({ hasText: `${product_name.product01}` }).getByRole('button', { name: '1' })
     }
     get verify_quanlity_02(): Locator{
-            return this.page.locator('#product-2').getByRole('button', { name: '1' })
+            return this.page.getByRole('row').filter({ hasText: `${product_name.product02}` }).getByRole('button', { name: '1' })
+
     }
 
     //button clear product
@@ -60,10 +62,16 @@ export class cart_page{
 
 
     async verify_cart_items(): Promise<void> {
-        await this.page.locator('#product-1').waitFor({ state: 'visible' });
-        await this.page.locator('#product-2').waitFor({ state: 'visible' });
-        await this.page.locator('#product-1').getByRole('button', { name: '1' }).waitFor({ state: 'visible' });
-        await this.page.locator('#product-2').getByRole('button', { name: '1' }).waitFor({ state: 'visible' });
+        await this.verify_product_01.waitFor({ state: 'visible' });
+        await this.verify_product_02.waitFor({ state: 'visible' });
+        await this.verify_quanlity_01.waitFor({ state: 'visible' });
+        await this.verify_quanlity_02.waitFor({ state: 'visible' });
     }
+
+//      await expect(page.locator(`[data-product-id="${product_ID}"]`)).toBeVisible();
+//       await expect(page.locator(`[data-product-id="${product_ID + 1}"]`)).toBeVisible();
+//page.locator('#product-1').getByRole('link', { name: 'Blue Top' })
+
+
 
 }
