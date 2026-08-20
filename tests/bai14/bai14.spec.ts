@@ -63,7 +63,7 @@ test('Test_02: xac nhan so luong', async ({ action }) => {
     await action.fillQuantily(quanlity);
     //await expect(product.get_verify_quanlity).toBeVisible();
 });
-test('Test_03: xoa san pham khoi gio hang', async ({ action, addToCart }) => {
+test('Test_03: xoa san pham khoi gio hang', async ({ action, addToCart}) => {
   //const addToCart = new cart_page(page);
 // === them san pham vao gio hang ===    
     await action.open_product();
@@ -76,17 +76,15 @@ test('Test_03: xoa san pham khoi gio hang', async ({ action, addToCart }) => {
     await action.go_to_cart();
     await action.view_cart();
 // === xoa san pham ===
-  const btnClear = addToCart.clear_product_btn;
-// su dung vong lap de xoa tat ca cac button x
-  while (await btnClear.count() > 0) {
-    const firstDeleteBtn = btnClear.first();
-    await expect(firstDeleteBtn).toBeVisible();
-    await firstDeleteBtn.click();
-  
-    //await page.waitForTimeout(500);
-  }
 
-  await expect(btnClear).toHaveCount(0);
+const btnClear = addToCart.clear_product_btn;
+
+while (await btnClear.count() > 0) {
+    await btnClear.first().click();
+    await expect(btnClear).toHaveCount(await btnClear.count() - 1);
+}
+
+await expect(btnClear).toHaveCount(0);
   
 });
 test('Test_04: dat hang, sau do dang ki tai khoan', async ({  action, addToCart,Sign_up  }) => {

@@ -48,7 +48,7 @@ export class cart_page{
 
     //button clear product
     get clear_product_btn(): Locator {
-        return this.page.locator('.cart_quantity_delete')
+        return this.page.locator('.fa.fa-times')
     }
     get check_out_btn(): Locator {
         return this.page.locator(`a:has-text("Proceed To Checkout")`)
