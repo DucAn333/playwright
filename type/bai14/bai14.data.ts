@@ -54,9 +54,9 @@ const randomName = generateRandomName();
 const randomPassword = generateRandomPassword();
 const lastName = generateRandomLastName();
 const phone = generateRandomPhoneNumber();
-const year = randomBirthYear();
-const month =  randomMonth();
-const days = randomDayOfMonth();
+const year = String(randomBirthYear());
+const month =  String(randomMonth());
+const days = String(randomDayOfMonth());
 
 
 //====data config====
