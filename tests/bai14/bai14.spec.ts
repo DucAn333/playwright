@@ -102,7 +102,7 @@ test('Test_04: dat hang, sau do dang ki tai khoan', async ({  action, addToCart,
     await expect (addToCart.verify_product_01).toBeVisible();
     
     await action.go_to_login_affter_cart();
-    await expect (Sign_up.sign_up_btn).toBeVisible();
+    await expect(Sign_up.sign_up_btn).toBeVisible();
     await action.sign_up_new_account();
     await expect (Sign_up.email_input).toBeVisible();
     await action.fill_new_account();
