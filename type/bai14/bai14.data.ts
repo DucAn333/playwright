@@ -67,7 +67,7 @@ export const product_name = {
 };
 
 export const quanlity = '4';
-//co the dung random de tao tiep ngay thang nam, nhung em luoi :D
+
 
 export const account = {
     name:randomName,
