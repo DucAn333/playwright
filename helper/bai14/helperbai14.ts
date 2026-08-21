@@ -36,8 +36,8 @@ export class aciton {
     
     }
     async viewProduct():Promise<void>{
-        await this.productInfo.productInfo.dblclick(); 
-        // sử dụng double click vì thi thoảng button hay bị lỗi, db click để chắc chắn hện pop-up
+        await this.productInfo.productInfo.click(); 
+        
     }
     async fillQuantily(quantily : string):Promise<void>{
         await this.productInfo.quanlity_input.clear();
@@ -84,7 +84,7 @@ export class aciton {
     }
     async go_to_add_payment():Promise<void>{
         await this.addPayment.icon_card.click();
-        await this.cart_page.check_out_btn.click();
+        await this.cart_page.check_out_btn.dblclick();
         
         await this.addPayment.comment_input.pressSequentially(comment);
         await this.addPayment.Place_oder_btn.click();
@@ -113,7 +113,7 @@ export class aciton {
         await this.signUp.sign_up_btn.click();
     }
     async go_to_check_out():Promise<void>{
-        await this.cart_page.check_out_btn.click();
+        await this.cart_page.check_out_btn.dblclick();
         await this.addPayment.comment_input.pressSequentially(comment);
         
     }
