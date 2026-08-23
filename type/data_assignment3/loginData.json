@@ -1,0 +1,43 @@
+[
+  {
+    "testCaseName": "Login hợp lệ thành công",
+    "email": "autouser_demo@example.com",
+    "password": "Password123!",
+    "expectedResult": "success"
+  },
+  {
+    "testCaseName": "Login sai mật khẩu",
+    "email": "autouser_demo@example.com",
+    "password": "WrongPassword999",
+    "expectedResult": "failure",
+    "expectedErrorMessage": "Your email or password is incorrect!"
+  },
+  {
+    "testCaseName": "Login với email chưa đăng ký",
+    "email": "khong_ton_tai_9999@example.com",
+    "password": "Password123!",
+    "expectedResult": "failure",
+    "expectedErrorMessage": "Your email or password is incorrect!"
+  },
+  {
+    "testCaseName": "Login để trống email",
+    "email": "",
+    "password": "Password123!",
+    "expectedResult": "failure",
+    "expectedErrorMessage": "Your email or password is incorrect!"
+  },
+  {
+    "testCaseName": "Login để trống mật khẩu",
+    "email": "autouser_demo@example.com",
+    "password": "",
+    "expectedResult": "failure",
+    "expectedErrorMessage": "Your email or password is incorrect!"
+  },
+  {
+    "testCaseName": "Login với email sai định dạng",
+    "email": "autouser_demo_khong_hop_le",
+    "password": "Password123!",
+    "expectedResult": "failure",
+    "expectedErrorMessage": "Your email or password is incorrect!"
+  }
+]
