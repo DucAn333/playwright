@@ -6,6 +6,8 @@ import a from '../../type/bai16/data.json'
 
 const link = 'https://automationexercise.com';
 
+const a = 1;
+
 
 
 test.describe('test case bai 14', () => {
