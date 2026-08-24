@@ -1,0 +1,7 @@
+testCaseName,name,email,Go_to_info,password,title,day,month,year,newsletter,specialOffers,firstName,lastName,company,address1,address2,country,state,city,zipcode,mobileNumber,expectedResult
+Đăng ký thành công đầy đủ thông tin,Nguyen Van A,register_success_full@example.com,TRUE,Password123!,Mr,15,May,1995,TRUE,TRUE,Nguyen,Van A,Zg,456 Le Loi,Toa nha ABC Tang 5,India,Ha Noi,Ha Noi,100000,912345678,success
+Đăng ký thất bại với email đã tồn tại,Nguyen Van B,autouser_demo@example.com,FALSE,Password123!,Mr,10,January,1990,FALSE,FALSE,Nguyen,Van B,,456 Le Loi,,India,Ha Noi,Ha Noi,100000,987654321,failure
+Đăng ký để trống Tên (Name),,register_empty_name@example.com,FALSE,Password123!,Mr,1,June,1992,FALSE,FALSE,Tran,Thi C,,789 Tran Phu,,India,Ha Noi,Ha Noi,100000,911222333,failure
+Đăng ký để trống Mật khẩu,Le Van D,register_empty_password@example.com,FALSE,,Mrs,20,March,1998,FALSE,TRUE,Le,Van D,,321 Hai Ba Trung,,India,Ha Noi,Ha Noi,100000,933444555,failure
+Đăng ký thành công với thông tin bắt buộc tối thiểu,Pham Thi E,register_success_minimal@example.com,TRUE,Password123!,Mrs,5,December,2000,FALSE,FALSE,Pham,Thi E,,1 Minimal Street,,India,Ha Noi,Ha Noi,100000,999888777,success
+Đăng ký để trống địa chỉ/số điện thoại bắt buộc,Hoang Van F,register_empty_address_phone@example.com,TRUE,Password123!,Mr,25,August,1988,TRUE,FALSE,Hoang,Van F,,,,India,Ha Noi,Ha Noi,100000,,failure
