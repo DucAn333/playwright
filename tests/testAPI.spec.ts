@@ -17,4 +17,11 @@ test('test API', async ({ request }) => {
     }
 
     console.log(`co ${count} san pham madame  ` );
+    expect(count).toBe(5);
+});
+test('test API post', async ({ request }) => {
+ 
+    const API_URL = 'https://automationexercise.com/api/productsList'
+
+    
 });
