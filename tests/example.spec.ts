@@ -22,13 +22,6 @@ test('get started link', async ({ page }) => {
 });
 
 
-
-
-
-
-
-
-
 test('youtube', async ({ page }) => {
   await page.goto('https://www.youtube.com/');
   await page.locator('#start #guide-button').click();
