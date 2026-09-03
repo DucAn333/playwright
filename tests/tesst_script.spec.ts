@@ -97,7 +97,7 @@ test('download_kiemtra_xoá', async ({ page }) => {
 
   // thuc hien download
   const downloadPromise = page.waitForEvent('download');
-  await page.getByRole('link', { name: 'image.png' }).click();
+  await page.getByRole('link', { name: 'IMG_9170.JPG' }).click();
 
 
 // lay thong tin file da tai
@@ -106,7 +106,7 @@ test('download_kiemtra_xoá', async ({ page }) => {
 
 
 // bẫy sự kiện, xử lỹ khi download, settup vị trí thư mục luôn
-  const downloadsDir = path.join(process.cwd(), 'download_file');
+  const downloadsDir = path.join(process.cwd(), 'file/download');
   await fs.promises.mkdir(downloadsDir, { recursive: true });
 
 
@@ -119,7 +119,7 @@ test('download_kiemtra_xoá', async ({ page }) => {
   expect(stats.isFile()).toBeTruthy();
   expect(stats.size).toBeGreaterThan(0);
 
-  // Nếu muốn xóa file ngay sau khi kiểm tra:
+  //Nếu muốn xóa file ngay sau khi kiểm tra:
   await fs.promises.unlink(savePath);
 
   let exists = true;
@@ -132,10 +132,10 @@ test('download_kiemtra_xoá', async ({ page }) => {
 });
 
 test('upload', async ({ page }) => {
-  const fileName = 'sample-upload.txt';  // file upload, setup file ở đay
+  const fileName = 'IMG.JPG';  // tên file cần upload
 
   //kiem tra file co ton tai khong
-  const filePath = path.join(process.cwd(), 'upload_file', fileName);
+  const filePath = path.join(process.cwd(), 'file/upload', fileName);// đường dẫn tuyệt đối đến file
 
   const exists = await fs.promises.access(filePath).then(() => true).catch(() => false);
   expect(exists).toBe(true);
