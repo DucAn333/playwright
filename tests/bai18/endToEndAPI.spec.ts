@@ -1,10 +1,10 @@
-import { test, expect } from '@playwright/test';
-
+import { test, expect } from '../../fixture/bai18/bai18.fixture';
+import { Account } from '../../type/bai18/interface';
 
 test.describe('Vòng đời tài khoản end-to-end', () => {
 // de data o day luon cho nhanh
   
-const userData = {
+const userData: Account = {
   "name": "Nguyen Van A",
   "email": `nguyenvana${Date.now()}@example.com`,
   "password": "SecurePassword123!",
@@ -27,7 +27,7 @@ const userData = {
 test('Test API Register Account', async ({ request }) => {
 const URL = 'https://automationexercise.com/api/createAccount';  
 const response = await request.post(URL, {
-    form: userData
+    form: { ...userData }
   });
 
   expect(response.status()).toBe(200);
@@ -53,6 +53,27 @@ const response = await request.get(URL, {
   }));
   
 });
+test('cập nhật thông tin tài khoản', async ({ request }) => {
+
+  const updatedUserData = {
+    name: 'Nguyen Van B',
+    email: userData.email,
+  };
+
+  const URL = 'https://automationexercise.com/api/updateAccount';
+  const response = await request.put(URL, {
+    form: {
+      ...userData,
+      email: updatedUserData.email,
+      name: updatedUserData.name,
+    }
+  });
+
+  expect(response.status()).toBe(200);
+  const responseBody = await response.json();
+  expect(responseBody.responseCode).toBe(200);
+  expect(responseBody.message).toBe('User updated!');
+});
 test('delete account', async ({ request }) => {
 const URL = 'https://automationexercise.com/api/deleteAccount';
 const response = await request.delete(URL, {
@@ -65,5 +86,15 @@ const response = await request.delete(URL, {
   const responseBody = await response.json();
   expect(responseBody.responseCode).toBe(200);
   expect(responseBody.message).toBe('Account deleted!');
+});
+test('login after delete account', async ({ request }) => {
+const URL = 'https://automationexercise.com/api/login';
+const response = await request.put(URL, {
+    form: {
+      email: userData.email,
+      password: userData.password
+    }
+  });
+  expect(response.status()).toBe(404);
 });
 });
