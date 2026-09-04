@@ -1,5 +1,4 @@
-import { test, expect } from '../../fixture/bai18/bai18.fixture';
-import { Product } from '../../type/bai18/interface';
+import { test, expect } from '@playwright/test';
 
 const URL = 'https://automationexercise.com/api/searchProduct';
 

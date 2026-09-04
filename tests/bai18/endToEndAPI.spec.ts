@@ -1,28 +1,8 @@
-import { test, expect } from '../../fixture/bai18/bai18.fixture';
-import { Account } from '../../type/bai18/interface';
-
+import { test, expect } from '@playwright/test';
+import { createAccountData } from '../../type/bai18/data';
 test.describe('Vòng đời tài khoản end-to-end', () => {
-// de data o day luon cho nhanh
-  
-const userData: Account = {
-  "name": "Nguyen Van A",
-  "email": `nguyenvana${Date.now()}@example.com`,
-  "password": "SecurePassword123!",
-  "title": "Mr",
-  "birth_date": "15",
-  "birth_month": "08",
-  "birth_year": "1995",
-  "firstname": "A",
-  "lastname": "Nguyen Van",
-  "company": "Công ty TNHH Ví Dụ",
-  "address1": "123 Đường Lê Lợi",
-  "address2": "Phường Bến Nghé",
-  "country": "India",
-  "zipcode": "700000",
-  "state": "Hồ Chí Minh",
-  "city": "Hồ Chí Minh",
-  "mobile_number": "0901234567"
-};
+  test.describe.configure({ mode: 'serial' });
+  const userData = createAccountData();
 
 test('Test API Register Account', async ({ request }) => {
 const URL = 'https://automationexercise.com/api/createAccount';  
@@ -88,13 +68,15 @@ const response = await request.delete(URL, {
   expect(responseBody.message).toBe('Account deleted!');
 });
 test('login after delete account', async ({ request }) => {
-const URL = 'https://automationexercise.com/api/login';
-const response = await request.put(URL, {
+const URL = 'https://automationexercise.com/api/verifyLogin';
+const response = await request.post(URL, {
     form: {
       email: userData.email,
       password: userData.password
     }
   });
-  expect(response.status()).toBe(404);
+  expect(response.status()).toBe(200);
+  const responseBody = await response.json();
+  expect(responseBody.responseCode).toBe(404);
 });
 });
