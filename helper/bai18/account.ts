@@ -1,73 +1,26 @@
 import { APIRequestContext } from '@playwright/test';
-import {Account} from '../../type/bai18/interface';
+import { Account } from '../../type/bai18/interface';
 
 export class AccountHelper {
+  constructor(private request: APIRequestContext) {}
 
-    constructor(
-        private request: APIRequestContext
-    ) {}
+  async createAccount(account: Account) {
+    return await this.request.post('/api/createAccount', { form: { ...account } });
+  }
 
-    async createAccount(account: Account) {
+  async verifyLogin(email: string, password: string) {
+    return await this.request.post('/api/verifyLogin', { form: { email, password } });
+  }
 
-        return await this.request.post(
-            '/api/createAccount',
-            {
-                form: { ...account }
-            }
-        );
-    }
+  async updateAccount(account: Account) {
+    return await this.request.put('/api/updateAccount', { form: { ...account } });
+  }
 
-    async verifyLogin(
-        email: string,
-        password: string
-    ) {
+  async getUserDetail(email: string) {
+    return await this.request.get('/api/getUserDetailByEmail', { params: { email } });
+  }
 
-        return await this.request.post(
-            '/api/verifyLogin',
-            {
-                form: {
-                    email,
-                    password
-                }
-            }
-        );
-    }
-
-    async updateAccount(account: Account) {
-
-        return await this.request.put(
-            '/api/updateAccount',
-            {
-                form: { ...account }
-            }
-        );
-    }
-
-    async getUserDetail(email: string) {
-
-        return await this.request.get(
-            '/api/getUserDetailByEmail',
-            {
-                params: {
-                    email
-                }
-            }
-        );
-    }
-
-    async deleteAccount(
-        email: string,
-        password: string
-    ) {
-
-        return await this.request.delete(
-            '/api/deleteAccount',
-            {
-                form: {
-                    email,
-                    password
-                }
-            }
-        );
-    }
+  async deleteAccount(email: string, password: string) {
+    return await this.request.delete('/api/deleteAccount', { form: { email, password } });
+  }
 }
