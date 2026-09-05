@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
@@ -5,11 +6,9 @@ export default defineConfig({
 
     fullyParallel: false,
 
-    retries: (globalThis as typeof globalThis & {
-        process?: { env?: { CI?: string } };
-    }).process?.env?.CI ? 1 : 0,
+    workers: process.env.CI ? 2 : 1,
 
-    workers: 1,
+    retries: process.env.CI ? 1 : 0,
 
     timeout: 50000,
 
@@ -27,12 +26,9 @@ export default defineConfig({
             height: 1080,
         },
 
-        headless: !!(globalThis as typeof globalThis & {
-            process?: { env?: { CI?: string } };
-        }).process?.env?.CI,
+        headless: !!process.env.CI,
 
         trace: 'retain-on-failure',
-
         screenshot: 'only-on-failure',
     },
 
