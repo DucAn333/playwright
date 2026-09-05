@@ -12,13 +12,13 @@ export default defineConfig({
 
     timeout: 50000,
 
-    reporter: [
-        ['list'],
-        ['html', {
-            outputFolder: 'playwright-report',
-            open: 'never',
-        }],
-    ],
+    // reporter: [
+    //     ['list'],
+    //     ['html', {
+    //         outputFolder: 'playwright-report',
+    //         open: 'never',
+    //     }],
+    // ],
 
     use: {
         viewport: {
