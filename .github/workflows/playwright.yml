@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
   schedule:
-    - cron: '0 10 * * *'
-
+    - cron: '45 17 * * *'
+      timezone: 'Asia/Ho_Chi_Minh'
 jobs:
   test:
     timeout-minutes: 60
