@@ -18,13 +18,18 @@ test('TC - Verify Cart Total with Discount Logic', async ({ page }) => {
   const priceText1 = await cartItems.nth(0).locator('p').filter({ hasText: '$' }).innerText();
   const priceText2 = await cartItems.nth(1).locator('p').filter({ hasText: '$' }).innerText();
 
-  const price1 = parseInt(priceText1.replace('$', '').trim());
-  const price2 = parseInt(priceText2.replace('$', '').trim());
+
+  // đổi int thành float do có số thập phân
+  const price1 = parseFloat(priceText1.replace('$', '').trim());
+  const price2 = parseFloat(priceText2.replace('$', '').trim());
+
+
+  
   const subtotal = price1 + price2; 
   const discount = subtotal * 0.1;
   const expectedTotal = subtotal - discount; 
   const uiSubtotalText = await page.getByText('SUBTOTAL').locator('..').locator('p').filter({ hasText: '$' }).first().innerText();
   const actualSubtotal = parseFloat(uiSubtotalText.replace('$', '').trim());
   console.log(`Debug Values -> Subtotal: ${subtotal}, Actual: ${actualSubtotal}`);
-  expect(actualSubtotal).toBe(subtotal);
+  expect(actualSubtotal).toBeCloseTo(subtotal, 2);
 });
