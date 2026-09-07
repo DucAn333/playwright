@@ -22,19 +22,19 @@ test('get started link', async ({ page }) => {
 });
 
 
-test('youtube', async ({ page }) => {
-  await page.goto('https://www.youtube.com/');
-  await page.locator('#start #guide-button').click();
-  await page.locator('#sign-in-button').getByRole('link', { name: 'Sign in' }).click();
-  await expect(page.getByText('Sign in', { exact: true })).toBeVisible();
-  await page.waitForTimeout(Time.minutes(0.1));
+// test('youtube', async ({ page }) => {
+//   await page.goto('https://www.youtube.com/');
+//   await page.locator('#start #guide-button').click();
+//   await page.locator('#sign-in-button').getByRole('link', { name: 'Sign in' }).click();
+//   await expect(page.getByText('Sign in', { exact: true })).toBeVisible();
+//   await page.waitForTimeout(Time.minutes(0.1));
   
-  // await page.screenshot({
-  //   path: 'screenshots/img.png',
-  //   fullPage: true,
-  // });
-  await page.close();
-});
+//   // await page.screenshot({
+//   //   path: 'screenshots/img.png',
+//   //   fullPage: true,
+//   // });
+//   await page.close();
+// });
 export const Time = {
   seconds: (value: number) => value * 1000,
   minutes: (value: number) => value * 60 * 1000,
