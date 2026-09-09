@@ -129,9 +129,10 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
 
     await subscribeInput.fill("student_tester@test.com");
     await page.locator("#subscribe").click();
-   
-
     const successMsg = await page.locator("#success-subscribe").innerText();
-    expect.soft(successMsg).toBe("You have been successfully subscribed!");
+await Promise.all([
+    expect.soft(successMsg).toBe("You have been successfully subscribed!")
+  ])
+    
   });
 });
