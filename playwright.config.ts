@@ -12,13 +12,13 @@ export default defineConfig({
 
     timeout: 50000,
 
-    reporter: [
-        ['list'],
-        ['html', {
-            outputFolder: 'playwright-report',
-            open: 'never',
-        }],
-    ],
+    // reporter: [
+    //     ['list'],
+    //     ['html', {
+    //         outputFolder: 'playwright-report',
+    //         open: 'never',
+    //     }],
+    // ],
 
     use: {
         viewport: {
@@ -29,9 +29,9 @@ export default defineConfig({
 
         headless: !!process.env.CI,
 
-        trace: 'retain-on-failure',
-        screenshot: 'only-on-failure',
-        video: 'retain-on-failure',
+        // trace: 'retain-on-failure',
+        // screenshot: 'only-on-failure',
+        // video: 'retain-on-failure',
     },
 
     projects: [

@@ -1,3 +1,4 @@
+
 /**
  * =============================================================================
  * 👑 LAB 8 (CAPSTONE CHALLENGE): DEBUG & XỬ LÝ FLAKY TESTS + ASSERTION BUGS
@@ -32,26 +33,16 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => {
-  test("Flow 1 - New user registration", async ({ page }, testInfo) => {
+  test("Flow 1 - New user registration", async ({ page }) => {
     await page.goto("https://automationexercise.com/login");
 
     const dynamicEmail = `tester_${Date.now()}_${Math.floor(Math.random() * 1000)}@test.com`;
     await page.locator('[data-qa="signup-name"]').fill("Tester Capstone");
     await page.locator('[data-qa="signup-email"]').fill(dynamicEmail);
-    if (testInfo.retry === 0) {
-      await page.route("**/signup", async (route) => {
-        await new Promise((resolve) => setTimeout(resolve, 1500));
-        await route.continue();
-      });
-    }
 
-    await page.locator('[data-qa="signup-button"]').click({ noWaitAfter: true });
+    await page.locator('[data-qa="signup-button"]').click();
 
-    const waitTime = testInfo.retry === 0 ? 100 : 5000;
-    await page.waitForTimeout(waitTime);
-
-    const isVisible = await page.locator('b:has-text("Enter Account Information")').isVisible();
-    expect(isVisible).toBe(true);
+    await expect(page.locator('b:has-text("Enter Account Information")')).toBeVisible({ timeout: 15000 });
   });
 
   test("Flow 2 - Search products by keyword", async ({ page }) => {
@@ -61,13 +52,13 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
     await page.locator("#submit_search").click();
 
     const titleText = await page.locator(".features_items h2.title").innerText();
-    expect.soft(titleText).toBe("ALL PRODUCTS");
+    expect.soft(titleText).toBe("SEARCHED PRODUCTS");
 
     const productCount = await page.locator(".features_items .col-sm-4").count();
-    expect.soft(productCount).toBe(15);
+    expect.soft(productCount).toBe(9);
 
     const firstProductName = await page.locator(".features_items .productinfo p").first().innerText();
-    expect.soft(firstProductName).toBe("Blue Denim Shirt");
+    expect.soft(firstProductName).toBe("Sleeveless Dress");
   });
 
   test("Flow 3 - Add products and verify modal dialog", async ({ page }) => {
@@ -76,16 +67,16 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
     await page.locator(".add-to-cart").first().click();
 
     const modalTitle = await page.locator("#cartModal .modal-title").innerText();
-    expect.soft(modalTitle).toBe("Added to Wishlist!");
+    expect.soft(modalTitle).toBe("Added!");
 
     const continueBtnText = await page.locator("#cartModal button").innerText();
-    expect.soft(continueBtnText).toBe("Keep Buying");
+    expect.soft(continueBtnText).toBe("Continue Shopping");
 
     await page.getByRole("button", { name: "Continue Shopping" }).click();
     await page.goto("https://automationexercise.com/view_cart");
 
     const rowCount = await page.locator("#cart_info_table tbody tr").count();
-    expect.soft(rowCount).toBe(3);
+    expect.soft(rowCount).toBe(1);
   });
 
   test("Flow 4 - Remove product from cart", async ({ page }) => {
@@ -97,30 +88,31 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
 
     await page.goto("https://automationexercise.com/view_cart");
 
-    await page.locator(".cart_quantity_delete").first().click();
-    await page.waitForTimeout(500);
+    const ClearBtn = page.locator(".cart_quantity_delete");
+    const Count = await ClearBtn.count();
+    for (let i = 0; i < Count; i++) {
+      await ClearBtn.nth(i).click();
+    }
+    //await page.waitForTimeout(500);
 
-    const currentRows = await page.locator("#cart_info_table tbody tr").count();
-    expect.soft(currentRows).toBe(2);
-
-    const emptyMsg = await page.locator("#empty_cart b").innerText();
-    expect.soft(emptyMsg).toBe("Your Shopping Bag is Completely Empty!");
-
-    const linkText = await page.locator("#empty_cart a").innerText();
-    expect.soft(linkText).toBe("Continue to Store");
+   await Promise.all([
+    expect(page.locator("#cart_info_table tbody tr")).toHaveCount(0),
+    expect(page.locator("#empty_cart b")).toHaveText("Cart is empty!"),
+    expect(page.locator("#empty_cart a")).toHaveText("here")
+]);
   });
 
   test("Flow 5 - Product detail and review form", async ({ page }) => {
     await page.goto("https://automationexercise.com/product_details/1");
 
     const reviewTabTitle = await page.locator('a[href="#reviews"]').innerText();
-    expect.soft(reviewTabTitle).toBe("CUSTOMER FEEDBACK");
+    expect.soft(reviewTabTitle).toBe("WRITE YOUR REVIEW");
 
     const namePlaceholder = await page.locator("#name").getAttribute("placeholder");
-    expect.soft(namePlaceholder).toBe("Enter Full Name");
+    expect.soft(namePlaceholder).toBe("Your Name");
 
     const emailPlaceholder = await page.locator("#email").getAttribute("placeholder");
-    expect.soft(emailPlaceholder).toBe("Enter Personal Email");
+    expect.soft(emailPlaceholder).toBe("Email Address");
   });
 
   test("Flow 6 - Footer newsletter subscription", async ({ page }) => {
@@ -130,16 +122,16 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
     await subscribeInput.scrollIntoViewIfNeeded();
 
     const headingText = await page.locator(".single-widget h2").first().innerText();
-    expect.soft(headingText).toBe("GET SPECIAL DEALS");
+    expect.soft(headingText).toBe("SUBSCRIPTION");
 
     const placeholder = await subscribeInput.getAttribute("placeholder");
-    expect.soft(placeholder).toBe("Enter mail here");
+    expect.soft(placeholder).toBe("Your email address");
 
     await subscribeInput.fill("student_tester@test.com");
     await page.locator("#subscribe").click();
-    await page.waitForTimeout(600);
+   
 
     const successMsg = await page.locator("#success-subscribe").innerText();
-    expect.soft(successMsg).toBe("Subscribed successfully!");
+    expect.soft(successMsg).toBe("You have been successfully subscribed!");
   });
 });
