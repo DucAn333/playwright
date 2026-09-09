@@ -39,7 +39,7 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
     const dynamicEmail = `tester_${Date.now()}_${Math.floor(Math.random() * 1000)}@test.com`;
     await page.locator('[data-qa="signup-name"]').fill("Tester Capstone");
     await page.locator('[data-qa="signup-email"]').fill(dynamicEmail);
-
+// bo phan retreis
     await page.locator('[data-qa="signup-button"]').click();
 
     await expect(page.locator('b:has-text("Enter Account Information")')).toBeVisible({ timeout: 15000 });
@@ -50,7 +50,7 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
 
     await page.locator("#search_product").fill("Dress");
     await page.locator("#submit_search").click();
-
+// lay dung cac text tren locator
     const titleText = await page.locator(".features_items h2.title").innerText();
     expect.soft(titleText).toBe("SEARCHED PRODUCTS");
 
@@ -77,6 +77,8 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
 
     const rowCount = await page.locator("#cart_info_table tbody tr").count();
     expect.soft(rowCount).toBe(1);
+
+    // sua lai toBE va text "added tren pop-op" tren locator
   });
 
   test("Flow 4 - Remove product from cart", async ({ page }) => {
@@ -94,6 +96,7 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
       await ClearBtn.nth(i).click();
     }
     //await page.waitForTimeout(500);
+    // dung vong lap de chac chan click het button "x", sau do them promise de expect
 
    await Promise.all([
     expect(page.locator("#cart_info_table tbody tr")).toHaveCount(0),
@@ -113,6 +116,8 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
 
     const emailPlaceholder = await page.locator("#email").getAttribute("placeholder");
     expect.soft(emailPlaceholder).toBe("Email Address");
+
+    // sua lai text tren locator
   });
 
   test("Flow 6 - Footer newsletter subscription", async ({ page }) => {
@@ -130,6 +135,8 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
     await subscribeInput.fill("student_tester@test.com");
     await page.locator("#subscribe").click();
     const successMsg = await page.locator("#success-subscribe").innerText();
+
+    // them promise de doi xuat hien locator, sau do xac nhan
 await Promise.all([
     expect.soft(successMsg).toBe("You have been successfully subscribed!")
   ])
