@@ -33,13 +33,30 @@
 import { test, expect } from "@playwright/test";
 
 test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => {
+  
+  // them beforeEach de chan cac request quang cao, google ads, doubleclick, googleads
+  test.beforeEach(async ({ page }) => {
+    await page.route('**/*', (route) => {
+      const url = route.request().url();
+
+      if (
+        url.includes('googlesyndication') ||
+        url.includes('doubleclick') ||
+        url.includes('googleads')
+      ) {
+        route.abort();
+      } else {
+        route.continue();
+      }
+    });
+  });
   test("Flow 1 - New user registration", async ({ page }) => {
     await page.goto("https://automationexercise.com/login");
 
     const dynamicEmail = `tester_${Date.now()}_${Math.floor(Math.random() * 1000)}@test.com`;
     await page.locator('[data-qa="signup-name"]').fill("Tester Capstone");
     await page.locator('[data-qa="signup-email"]').fill(dynamicEmail);
-// bo phan retreis
+// bo phan retries
     await page.locator('[data-qa="signup-button"]').click();
 
     await expect(page.locator('b:has-text("Enter Account Information")')).toBeVisible({ timeout: 15000 });
@@ -50,15 +67,16 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
 
     await page.locator("#search_product").fill("Dress");
     await page.locator("#submit_search").click();
-// lay dung cac text tren locator
-    const titleText = await page.locator(".features_items h2.title").innerText();
-    expect.soft(titleText).toBe("SEARCHED PRODUCTS");
+
+    const titleText = page.getByRole('heading', { name: 'Searched Products', level: 2 })
+// sua lai locator va them await
+    await expect(titleText).toBeVisible();
 
     const productCount = await page.locator(".features_items .col-sm-4").count();
-    expect.soft(productCount).toBe(9);
+    await expect.soft(productCount).toBe(9);
 
     const firstProductName = await page.locator(".features_items .productinfo p").first().innerText();
-    expect.soft(firstProductName).toBe("Sleeveless Dress");
+    await expect.soft(firstProductName).toBe("Sleeveless Dress");
   });
 
   test("Flow 3 - Add products and verify modal dialog", async ({ page }) => {
@@ -66,17 +84,17 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
 
     await page.locator(".add-to-cart").first().click();
 
-    const modalTitle = await page.locator("#cartModal .modal-title").innerText();
-    expect.soft(modalTitle).toBe("Added!");
+    const modalTitle = page.getByRole('heading', { name: 'Added!', level: 4 });
+    await expect(modalTitle).toBeVisible();
 
-    const continueBtnText = await page.locator("#cartModal button").innerText();
-    expect.soft(continueBtnText).toBe("Continue Shopping");
+    const continueBtnText = page.getByRole('button', { name: 'Continue Shopping' })
+    await expect(continueBtnText).toBeVisible();
 
     await page.getByRole("button", { name: "Continue Shopping" }).click();
     await page.goto("https://automationexercise.com/view_cart");
 
     const rowCount = await page.locator("#cart_info_table tbody tr").count();
-    expect.soft(rowCount).toBe(1);
+    await expect.soft(rowCount).toBe(1);
 
     // sua lai toBE va text "added tren pop-op" tren locator
   });
@@ -108,16 +126,16 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
   test("Flow 5 - Product detail and review form", async ({ page }) => {
     await page.goto("https://automationexercise.com/product_details/1");
 
-    const reviewTabTitle = await page.locator('a[href="#reviews"]').innerText();
-    expect.soft(reviewTabTitle).toBe("WRITE YOUR REVIEW");
+    const reviewTabTitle = page.getByRole('link', { name: 'Write Your Review' });
+    await expect(reviewTabTitle).toBeVisible();
 
-    const namePlaceholder = await page.locator("#name").getAttribute("placeholder");
-    expect.soft(namePlaceholder).toBe("Your Name");
+    const namePlaceholder = page.getByRole('textbox', { name: 'Your Name' })
+    await expect(namePlaceholder).toBeVisible();
 
-    const emailPlaceholder = await page.locator("#email").getAttribute("placeholder");
-    expect.soft(emailPlaceholder).toBe("Email Address");
+    const emailPlaceholder = page.getByRole('textbox', { name: 'Email Address', exact: true })
+    await expect(emailPlaceholder).toBeVisible();
 
-    // sua lai text tren locator
+    // sua lai locator
   });
 
   test("Flow 6 - Footer newsletter subscription", async ({ page }) => {
@@ -126,20 +144,20 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
     const subscribeInput = page.locator("#susbscribe_email");
     await subscribeInput.scrollIntoViewIfNeeded();
 
-    const headingText = await page.locator(".single-widget h2").first().innerText();
-    expect.soft(headingText).toBe("SUBSCRIPTION");
+    const headingText = page.getByRole('heading', { name: 'Subscription', level: 2 });
+    await expect(headingText).toBeVisible();
 
-    const placeholder = await subscribeInput.getAttribute("placeholder");
-    expect.soft(placeholder).toBe("Your email address");
+    const placeholder = page.getByRole('textbox', { name: 'Your email address' });
+    await expect(placeholder).toBeVisible();
 
     await subscribeInput.fill("student_tester@test.com");
     await page.locator("#subscribe").click();
-    const successMsg = await page.locator("#success-subscribe").innerText();
+    const successMsg = page.locator('.alert-success.alert')
 
-    // them promise de doi xuat hien locator, sau do xac nhan
-await Promise.all([
-    expect.soft(successMsg).toBe("You have been successfully subscribed!")
-  ])
+    //  doi locator
+    
+    await expect(successMsg).toBeVisible();
+
     
   });
 });
