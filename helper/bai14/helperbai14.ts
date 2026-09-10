@@ -43,7 +43,7 @@ export class aciton {
         await this.productInfo.quanlity_input.clear();
         await this.productInfo.quanlity_input.pressSequentially(quantily);
         await this.productInfo.add_to_cart.click();
-        await this.productInfo.view_cart.click();
+        await this.productInfo.view_cart.click({ timeout: 5000 });
     }
     async continue_shoping():Promise<void>{
         await this.cart_page.continue_shoping_pop_up.click({ timeout: 5000 });
@@ -113,7 +113,7 @@ export class aciton {
         await this.signUp.sign_up_btn.click();
     }
     async go_to_check_out():Promise<void>{
-        await this.cart_page.check_out_btn.dblclick();
+        await this.cart_page.check_out_btn.click({timeout: 5000});
         await this.addPayment.comment_input.pressSequentially(comment);
         
     }
