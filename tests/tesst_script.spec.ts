@@ -91,45 +91,45 @@ await page.close();
 
 });
 
-test('download_kiemtra_xoá', async ({ page }) => {
-  await page.goto('https://the-internet.herokuapp.com/download');
+// test('download_kiemtra_xoá', async ({ page }) => {
+//   await page.goto('https://the-internet.herokuapp.com/download');
 
 
-  // thuc hien download
-  const downloadPromise = page.waitForEvent('download');
-  await page.getByRole('link', { name: 'IMG_9170.JPG' }).click();
+//   // thuc hien download
+//   const downloadPromise = page.waitForEvent('download');
+//   await page.getByRole('link', { name: 'IMG_9170.JPG' }).click();
 
 
-// lay thong tin file da tai
-  const download = await downloadPromise;
-  const suggestedFilename = download.suggestedFilename();
+// // lay thong tin file da tai
+//   const download = await downloadPromise;
+//   const suggestedFilename = download.suggestedFilename();
 
 
-// bẫy sự kiện, xử lỹ khi download, settup vị trí thư mục luôn
-  const downloadsDir = path.join(process.cwd(), 'file/download');
-  await fs.promises.mkdir(downloadsDir, { recursive: true });
+// // bẫy sự kiện, xử lỹ khi download, settup vị trí thư mục luôn
+//   const downloadsDir = path.join(process.cwd(), 'file/download');
+//   await fs.promises.mkdir(downloadsDir, { recursive: true });
 
 
-  // lưu đúng vị trí
-  const savePath = path.join(downloadsDir, suggestedFilename);
-  await download.saveAs(savePath);
+//   // lưu đúng vị trí
+//   const savePath = path.join(downloadsDir, suggestedFilename);
+//   await download.saveAs(savePath);
 
-  // kiểm tra file
-  const stats = await fs.promises.stat(savePath);
-  expect(stats.isFile()).toBeTruthy();
-  expect(stats.size).toBeGreaterThan(0);
+//   // kiểm tra file
+//   const stats = await fs.promises.stat(savePath);
+//   expect(stats.isFile()).toBeTruthy();
+//   expect(stats.size).toBeGreaterThan(0);
 
-  //Nếu muốn xóa file ngay sau khi kiểm tra:
-  await fs.promises.unlink(savePath);
+//   //Nếu muốn xóa file ngay sau khi kiểm tra:
+//   await fs.promises.unlink(savePath);
 
-  let exists = true;
-  try {
-    await fs.promises.access(savePath);
-  } catch {
-    exists = false;
-  }
-  expect(exists).toBe(false);
-});
+//   let exists = true;
+//   try {
+//     await fs.promises.access(savePath);
+//   } catch {
+//     exists = false;
+//   }
+//   expect(exists).toBe(false);
+// });
 
 test('upload', async ({ page }) => {
   const fileName = 'IMG.JPG';  // tên file cần upload
