@@ -109,12 +109,13 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
     await page.goto("https://automationexercise.com/view_cart");
 
     const ClearBtn = page.locator(".cart_quantity_delete");
-    const Count = await ClearBtn.count();
+    let Count = await ClearBtn.count();
     // for (let i = 0; i < Count; i++) {
     //   await ClearBtn.nth(i).click();
     // }
     while (Count > 0) {
       await Clearbtn.first().click();
+      Const --;
       await expect(Clearbtn).toHaveCount(Count - 1);
     }
     //await page.waitForTimeout(500);
