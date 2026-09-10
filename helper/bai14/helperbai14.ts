@@ -46,7 +46,7 @@ export class aciton {
         await this.productInfo.view_cart.click();
     }
     async continue_shoping():Promise<void>{
-        await this.cart_page.continue_shoping_pop_up.click();
+        await this.cart_page.continue_shoping_pop_up.click({ timeout: 5000 });
     }
     async view_cart():Promise<void>{
         await this.cart_page.view_cart_pop_up.click();
