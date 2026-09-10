@@ -113,9 +113,9 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
     // for (let i = 0; i < Count; i++) {
     //   await ClearBtn.nth(i).click();
     // }
-    while (await btnClear.count() > 0) {
-    await btnClear.first().click();
-    await expect(btnClear).toHaveCount(await btnClear.count() - 1);
+    while (Count > 0) {
+    await Clearbtn.first().click();
+    await expect(Clearbtn).toHaveCount(Count - 1);
     }
     //await page.waitForTimeout(500);
     // dung vong lap de chac chan click het button "x", sau do them promise de expect
