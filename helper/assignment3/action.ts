@@ -20,7 +20,7 @@ export class Login {
     async login(account : any ):Promise<void>{
         await this.login_account.login_email_input.pressSequentially(account.email);
         await this.login_account.login_pass_input.pressSequentially(account.password);
-        await this.login_account.Login_btn.click();
+        await this.login_account.Login_btn.click({timeout: 5000});
     }
 }
 export class new_account{

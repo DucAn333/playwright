@@ -110,7 +110,7 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
 
     // const ClearBtn = page.locator(".cart_quantity_delete");
     // let Count = await ClearBtn.count();
-    // for (let i = 0; i < Count; i++) {
+    // for (let i = 0; i <= Count; i++) {
     //   await ClearBtn.nth(i).click();
     // }
     const clearBtn = page.locator(".cart_quantity_delete");
@@ -125,20 +125,20 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
     expect(page.locator("#cart_info_table tbody tr")).toHaveCount(0),
     expect(page.locator("#empty_cart b")).toHaveText("Cart is empty!"),
     expect(page.locator("#empty_cart a")).toHaveText("here")
-]);
+  ]);
   });
 
   test("Flow 5 - Product detail and review form", async ({ page }) => {
     await page.goto("https://automationexercise.com/product_details/1");
 
     const reviewTabTitle = page.getByRole('link', { name: 'Write Your Review' });
-    await expect(reviewTabTitle).toBeVisible();
+    await expect(reviewTabTitle).toBeVisible({timeout: 5000});
 
     const namePlaceholder = page.getByRole('textbox', { name: 'Your Name' })
-    await expect(namePlaceholder).toBeVisible();
+    await expect(namePlaceholder).toBeVisible({timeout: 5000});
 
     const emailPlaceholder = page.getByRole('textbox', { name: 'Email Address', exact: true })
-    await expect(emailPlaceholder).toBeVisible();
+    await expect(emailPlaceholder).toBeVisible({timeout: 5000});
 
     // sua lai locator
   });
@@ -161,7 +161,7 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
 
     //  doi locator
     
-    await expect(successMsg).toBeVisible();
+    await expect(successMsg).toBeVisible({timeout: 5000});
 
     
   });
