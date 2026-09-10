@@ -108,16 +108,18 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
 
     await page.goto("https://automationexercise.com/view_cart");
 
-    const ClearBtn = page.locator(".cart_quantity_delete");
-    let Count = await ClearBtn.count();
-    for (let i = 0; i < Count; i++) {
-      await ClearBtn.nth(i).click();
-    }
-    // while (Count > 0) {
-    //   await ClearBtn.first().click();
+    // const ClearBtn = page.locator(".cart_quantity_delete");
+    // let Count = await ClearBtn.count();
+    // for (let i = 0; i < Count; i++) {
+    //   await ClearBtn.nth(i).click();
     // }
-    //await page.waitForTimeout(500);
-    // dung vong lap de chac chan click het button "x", sau do them promise de expect
+    const clearBtn = page.locator(".cart_quantity_delete");
+
+    while ((await clearBtn.count()) > 0) {
+      const countBefore = await clearBtn.count();
+      await clearBtn.first().click();
+      
+    }
 
    await Promise.all([
     expect(page.locator("#cart_info_table tbody tr")).toHaveCount(0),
