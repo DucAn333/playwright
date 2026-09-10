@@ -118,7 +118,7 @@ test.describe("Lab 8 - Capstone Challenge: E-Commerce Flow Verification", () => 
     while ((await clearBtn.count()) > 0) {
       const countBefore = await clearBtn.count();
       await clearBtn.first().click();
-      
+      await expect(clearBtn).toHaveCount(countBefore - 1);
     }
 
    await Promise.all([
